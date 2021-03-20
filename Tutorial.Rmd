@@ -21,15 +21,15 @@ You dont have to keep the layout of R studio the same as the way it starts, find
 Using R projects rather than just scripts helps to organise all the projects that you work on. Projects create their own directory for that project and this is set as the working directory, keeps the environments of different projects seperate, allow you to open multiple projects at once and run multiple things at once, and are used for version control. To create a new project, go to File > New Project 
 
 ### Folders
-Everyone sets up their folders different, so find a way that works for you Here are some examples:
+Everyone sets up their folders different, so find a way that works for you. Here are some examples:
 
-* Data_raw - where all the raw data goes   
+* Data_raw - where all the raw data goes and isn't changed   
 * Data_process - where all the data you are processing and cleaning goes   
 * Data_clean - final data used in your next steps   
 * Outputs - your good outputs   
 * Scripts - the scripts you are using   
-* Archive_scripts - Old scripts   
-* Archive_outputs   - old outputs   
+* Archive_scripts - old scripts   
+* Archive_outputs - old outputs   
     
 ### Scripts
 It seems like personal preference if you like to have many small scripts or fewer big ones. Most people like to have functions that you create in seperate scripts which are sourced in  (described below). If you like to split you scripts by what their function is, it can be good to name them using numbers to indicate the order they go in e.g. `1_DataCleaning`, `2_DataManipulation`, `3_Models`, `4_Plots`. Other people also have a master scripts which contain all the essential code needed to reproduce the results. This master script is good if you want to publish your code.
