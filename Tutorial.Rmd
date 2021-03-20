@@ -9,7 +9,7 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-This tutorial documents some of the tips and tricks that we Deakin HDR students have learnt over the years of coding. The idea and some topics were based on a QAEco coding club session at Uni Melb by Dr Saras Windecker.
+This tutorial documents some of the tips and tricks that we Deakin HDR students have learnt over the years of coding in R. The idea and some topics were based on a QAEco coding club session at Uni Melb by Dr Saras Windecker.
 
 
 ## Setting up your projects
