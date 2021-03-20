@@ -124,6 +124,7 @@ source("Scripts/1_DataCleaning.R")
 # I have started using this for data exploration
 # also can use it for writing reports, great way to share with supervisors or collaborators
 
+# in the github folder, you shoud be able to see DataExploration.Rmd for an example
 
 
 ##****************##

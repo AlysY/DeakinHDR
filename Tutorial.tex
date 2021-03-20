@@ -1,0 +1,360 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+  \usepackage{amssymb}
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={R Tips and Tricks},
+  pdfauthor={Alys Young},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifluatex
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+
+\title{R Tips and Tricks}
+\author{Alys Young}
+\date{19/03/2021}
+
+\begin{document}
+\maketitle
+
+This tutorial documents some of the tips and tricks that we Deakin HDR
+students have learnt over the years of coding. The idea and some topics
+were based on a QAEco coding club session at Uni Melb by Dr Saras
+Windecker.
+
+\hypertarget{setting-up-your-projects}{%
+\subsection{Setting up your projects}\label{setting-up-your-projects}}
+
+\hypertarget{rstudio-layout}{%
+\subsubsection{RStudio layout}\label{rstudio-layout}}
+
+You dont have to keep the layout of R studio the same as the way it
+starts, find a layout, colour, font that works best for you. E.g. I love
+having my scripts panel and console the biggest, and the environment
+panel small (Tools \textgreater{} Global Options \textgreater{} Pane
+layout). Lots of people like using dark modes for the colour (Tools
+\textgreater{} Global Options \textgreater{} Appearance). You can also
+use rainbow parenthesis to help you get the right number of brackets
+(Tools \textgreater{} Global Options \textgreater{} Code \textgreater{}
+Editing). Play around with these in tools \textgreater{} global options.
+
+\hypertarget{r-projects}{%
+\subsubsection{R Projects}\label{r-projects}}
+
+Using R projects rather than just scripts helps to organise all the
+projects that you work on. Projects create their own directory for that
+project and this is set as the working directory, keeps the environments
+of different projects seperate, allow you to open multiple projects at
+once and run multiple things at once, and are used for version control.
+To create a new project, go to File \textgreater{} New Project
+
+\hypertarget{folders}{%
+\subsubsection{Folders}\label{folders}}
+
+Everyone sets up their folders different, so find a way that works for
+you Here are some examples: * Data\_raw - where all the raw data goes\\
+* Data\_process - where all the data you are processing and cleaning
+goes\\
+* Data\_clean - final data used in your next steps\\
+* Outputs - Your good outputs\\
+* Scripts - the scripts you are using\\
+* Archive\_scripts - Old scripts\\
+* Archive\_outputs - old outputs
+
+\hypertarget{scripts}{%
+\subsubsection{Scripts}\label{scripts}}
+
+It seems like personal preference if you like to have many small scripts
+or fewer big ones. Most people like to have functions that you create in
+seperate scripts which are sourced in (described below). If you like to
+split you scripts by what their function is, it can be good to name them
+using numbers to indicate the order they go in
+e.g.~\texttt{1\_DataCleaning}, \texttt{2\_DataManipulation},
+\texttt{3\_Models}, \texttt{4\_Plots}. Other people also have a master
+scripts which contain all the essential code needed to reproduce the
+results. This master script is good if you want to publish your code.
+
+\hypertarget{r-markdown}{%
+\subsubsection{R Markdown}\label{r-markdown}}
+
+These notes are written in RMarkdown. Its a method of writing doccuments
+and easily embedding code and code outputs. People use RMarkdown for
+writting papers, communicating with stakeholders and supervisors,
+creating resumes ect. My new favourite way to use it is like a tradition
+lab notebook which records what we tried and why. I have started doing
+the data cleaning and manipulation in markdown so that I have a record
+of what we tried, why decisions were made, and communicate that process
+to supervisors.
+
+\hypertarget{setting-up-you-code}{%
+\subsection{Setting up you code}\label{setting-up-you-code}}
+
+Along with the heading at the top of the script, i also always include
+\texttt{rm(list=ls())} at the top too. This clears all the code in your
+consol. Sometimes you want to keep elements there if they take a long
+time to create or run, but ideally you would still clean it so that you
+know those elements can still be created from the code in your script.
+Otherwise you might be using elements which dont have the value that you
+expct which will change your results and make the code non-reproducible.
+
+\hypertarget{load-packages}{%
+\subsubsection{Load packages}\label{load-packages}}
+
+If you're sharing your code, it can be difficult to know which packages
+are already installed on someone elses computer. use this structure
+\texttt{if\ (!require(ggplot2))\ install.packages(\textquotesingle{}ggplot2\textquotesingle{})},
+changing \texttt{ggplot2} to be the package you want installed. You can
+then load packages as usual using \texttt{library(ggplot2)}. But you can
+also use packages without loading them by using \texttt{::} symbols
+after the package name and then after the \texttt{::} write the function
+you want to use. For example, if we wanted to manipulate data using the
+dplyr package and the function mutate, we could say
+\texttt{dplyr::mutate()}. This would be the same as loading the
+\texttt{dplyr} packages and writing the function mutate
+\texttt{mutate()}
+
+\hypertarget{source-a-file}{%
+\subsubsection{Source a file}\label{source-a-file}}
+
+Write code in another file which makes elements in an environment and
+use the function \texttt{source} to load the R script and all its ojects
+into your environment. Try it by making a new blank scipt, code a simple
+vector, e.g.~\texttt{x\ \textless{}-\ c(1,4,9)} and save the script. Go
+to a new script, \texttt{source()} the script with the vector code in
+it,
+e.g.~\texttt{source(\textquotesingle{}your\_directory/your\_script.R\textquotesingle{})}
+and \texttt{x} should appear in your environmnet.
+
+\hypertarget{namimg-of-elements}{%
+\subsubsection{Namimg of elements}\label{namimg-of-elements}}
+
+It can be easier to understand your code if elements are named in a
+logical manner. For example, shapefiles could have the suffix
+\texttt{\_shp}, dataframes \texttt{\_df}, rasters \texttt{\_ras}.
+Remember, its important that code can be read by humans so while being
+succient is good, it can be better to write longer code that is easier
+to understand by yourself and other people.
+
+\hypertarget{headings-and-commenting}{%
+\subsection{Headings and commenting}\label{headings-and-commenting}}
+
+Using logical heading and commenting out your code are useful in
+organisation and help if you ever have to come back to the code later.
+This section shows you how Alys Young lays out her code to give you
+inpiration. I find boxes around heading easy to find in the script, but
+I use starts * (shift+8) instead of hashes \# (shift+3) the whole way to
+keep my automatic table of contents cleaner. The table of contents can
+be accessed for each script by clicking the button on the top right of
+an active script which looks like horizontal lines (in line with the run
+button, next to the source button).
+
+\hypertarget{top-of-the-doccument}{%
+\subsubsection{Top of the doccument}\label{top-of-the-doccument}}
+
+Write detailed notes with important information at the top of your
+script.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\#\#**************}\AlertTok{\#\#\#}
+\DocumentationTok{\#\#\# Script title }\AlertTok{\#\#\#}
+\DocumentationTok{\#\#\#**************}\AlertTok{\#\#\#}
+\CommentTok{\# Project aim:}
+\CommentTok{\#}
+\CommentTok{\# Author:}
+\CommentTok{\#}
+\CommentTok{\# Collaborators:}
+\CommentTok{\#}
+\CommentTok{\# Date:}
+\CommentTok{\#}
+\CommentTok{\# Script aim:}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{in-the-code}{%
+\subsubsection{In the code}\label{in-the-code}}
+
+For main sections of the code I use boxes again and number them. My
+first main section is usually ``set up''.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\#************************\#\#}
+\DocumentationTok{\#\# 1. Write headings here \#\# {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
+\DocumentationTok{\#\#************************\#\#}
+\end{Highlighting}
+\end{Shaded}
+
+Sub headings can be more simple. By using the line after the title, it
+will appear in the table of contents. Otherwise you can use 4 or more
+hash, hyphen or lines. Hashes \#\#\#\# Hyphen ---- Equals ====
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 1.1 Write sub{-}headings like this {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{snippets}{%
+\subsubsection{Snippets}\label{snippets}}
+
+You can create pre-made pieces of code so that you don't have to type it
+out every time; these are called snippets. Snippets can be viewed and
+modified in tools \textgreater{} global options \textgreater{} code
+\textgreater{} edit snippets Here you can see what snippets are
+available by defult and create your own using the same format as the
+ones currently there.\\
+For example, I use a snippet for the the heading for the top of the
+document as shown below.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{snippet header}
+    \DocumentationTok{\#\#\#***************}\AlertTok{\#\#\#}
+    \DocumentationTok{\#\#\# Project Title }\AlertTok{\#\#\#}
+    \DocumentationTok{\#\#\#***************}\AlertTok{\#\#\#}
+    \CommentTok{\# Project aim:}
+    \CommentTok{\#}
+    \CommentTok{\# Author:}
+    \CommentTok{\#}
+    \CommentTok{\# Collaborators:}
+    \CommentTok{\#}
+    \CommentTok{\# Date:}
+    \CommentTok{\#}
+    \CommentTok{\# Script aim:}
+\end{Highlighting}
+\end{Shaded}
+
+Thank you to August Hao for showing me snippets.
+
+\hypertarget{other-notes}{%
+\subsection{Other notes}\label{other-notes}}
+
+\hypertarget{key-board-shortcuts}{%
+\subsubsection{Key board shortcuts}\label{key-board-shortcuts}}
+
+Shortcuts are a great way to increase your speed and make coding easier.
+They can be found here
+\url{https://support.rstudio.com/hc/en-us/articles/200711853-Keyboard-Shortcuts}
+. Some of the ones I use most often: * A new heading\\
+* Windows: ctrl + shift + r * Mac: cmnd + shift + r
+
+\begin{itemize}
+\tightlist
+\item
+  Dplyr pipe
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Windows: ctrl + shift + m
+  \item
+    Mac: cmnd + shift + m
+  \end{itemize}
+\item
+  To jump to the end of your line of code
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Windows: crt + arrow key
+  \item
+    Mac: cmd + arrow
+  \end{itemize}
+\end{itemize}
+
+\end{document}
