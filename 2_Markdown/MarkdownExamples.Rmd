@@ -1,0 +1,147 @@
+---
+title: "Markdown Examples"
+author: "Billy Geary"
+date: "09/04/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(tidyr)
+library(dplyr)
+data(cars) # Load example dataset
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can knit to either a pdf or html. 
+
+# Looking at some data
+```{r cars, message=FALSE, warning=FALSE}
+data(cars) # Load example dataset
+head(cars)
+summary(cars)
+```
+
+# Useful things for your Supplementary Material
+
+# Big heading
+## Little heading
+### Even littler heading
+#### Even littler again heading
+
+* dot points
+
+You can also **Bold** or *Italicise* your text
+
+Or embed equations using dollar signs:
+$$y = mx + c$$
+Including adding greek letters, superscripts or subscripts
+$$log(\mu) = \beta_0 + \beta_1 * elev$$
+
+# Using R Markdown to show results straight from R
+
+(or, no more copying and pasting!)
+
+## Cool tables using kable
+```{r message=FALSE, warning=FALSE}
+library(knitr)
+# Create mini table of summary statistics
+summary.stats = cars %>% group_by() %>% summarise(Mean_Speed = mean(speed),
+                                                  SD_Speed = sd(speed),
+                                                  Mean_Dist = mean(dist),
+                                                  SD_Dist = sd(dist))
+summary.stats
+```
+
+Now make a pretty table
+```{r}
+kable(summary.stats)
+```
+
+## A really good use: model coefficient tables
+```{r message=FALSE, warning=FALSE}
+m = lm(dist ~ speed, data=cars)
+coeffs = data.frame(coef(m))
+conf = data.frame(confint(m))
+
+model.table = cbind(coeffs, conf)
+colnames(model.table) = c("Coef", "Lower 95% CI", "Upper 95% CI")
+
+kable(model.table)
+```
+
+## Embedding plots using ggplot
+```{r message=FALSE, warning=FALSE}
+library(ggplot2)
+# Standard ggplot 
+cars.re = cars %>% pivot_longer(cols=c(speed,dist), names_to='name', values_to='value')
+
+boxplot = ggplot(cars.re) + geom_boxplot(aes(x=name,y=value))
+boxplot
+
+plot = ggplot(cars, aes(x=speed, y=dist)) + geom_point() + geom_smooth() + theme_bw()
+plot
+```
+
+## Side by side plots with cowplot
+```{r message=FALSE, warning=FALSE}
+cowplot::plot_grid(plot, boxplot, labels=c("a)", "b)"))
+```
+
+
+## Interactive plots with plotly
+If you save your markdown file as an HTML file, you can also embed interactive plots by converting ggplot plots to plotly plots
+
+```{r message=FALSE, warning=FALSE}
+library(plotly)
+# Converting to an interactive plot with plotly
+ggplotly(plot)
+```
+
+## Embedding interactive maps
+
+```{r message=FALSE, warning=FALSE}
+library(leaflet)
+library(sf)
+
+vic = read_sf("~/Dropbox/_Research/data/spatial/outline_shapefiles/Vic Outline/vmlite_victoria_line_su2.shp")
+
+plot(vic$geometry) # Check the data
+
+```
+
+Now do the interactive map
+
+```{r message=FALSE, warning=FALSE}
+#
+map = leaflet(vic) %>% 
+  addTiles() %>% # default basemap
+  addPolylines() # add the shapefle (Vic Outline)
+
+map
+
+```
+
+## Can do the same with raster data
+```{r message=FALSE, warning=FALSE}
+library(raster)
+
+ras = raster("~/Dropbox/_Research/data/spatial/climate grids/rainfall_means/July_MeanRainfall.grid")
+crs(ras) = "+proj=longlat +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +no_defs"
+ras = projectRaster(ras, crs = '+proj=longlat +datum=WGS84')
+
+raster.map = leaflet(ras) %>%
+  addTiles() %>%
+  addRasterImage(ras$July_MeanRainfall)
+
+raster.map
+
+```
+
+
+## Some good examples to steal ideas from
+
+* Scroggie et al. 2020 Journal of Applied Ecology (https://besjournals.onlinelibrary.wiley.com/doi/abs/10.1111/1365-2664.13253)
+* Lamb et al. 2020 PNAS (https://www.pnas.org/content/117/30/17876)
