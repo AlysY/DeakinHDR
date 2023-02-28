@@ -246,13 +246,18 @@ ggplot(data = iris, aes(x = Sepal.Length, y = Sepal.Width)) +
   labs(title = "Sepal length by width", x = "Sepal length (cm)", y="Sepal width (cm)")
 ```
 
-Lengend position
+Legend position
 ```{r legend}
 ggplot(data = iris, aes(x = Sepal.Length, y = Sepal.Width, color = Species)) +
   geom_point() +
   theme(legend.position = "bottom") # try "top"
 ```
 
+No legend
+```{r no legend}
+ggplot(data = iris, aes(x = Sepal.Length, y = Sepal.Width, color = Species)) +
+  geom_point(show.legend = FALSE) # check
+```
 
 Add a regression line to see trends
 ```{r scatter}

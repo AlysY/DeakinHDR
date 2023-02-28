@@ -1,48 +1,100 @@
 ---
 title: "Markdown Examples"
-author: "Billy Geary"
-date: "09/04/2021"
-output: html_document
+author: "Orginially Billy Geary, updated by Alys Young"
+date: "`r format(Sys.time(), '%d %B %Y)`"
+output:
+  html_document:
+    toc: true
+    toc_depth: 2
+    number_sections: true
 ---
 
+### notes for a new tutorial:
+
+- italics on an output of inline code using kableExtra and text_spec
 ```{r setup, include=FALSE}
 library(tidyr)
 library(dplyr)
 data(cars) # Load example dataset
 ```
 
-## R Markdown
+# R Markdown
 
 This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
+<br>
 When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can knit to either a pdf or html. 
+<br>
 
-# Looking at some data
+# Text
+
+Use hashes before text to specifiy headings.
+# Big heading
+## Little heading
+### Even littler heading
+#### Even littler again heading
+
+* dot points use a single star or plus sign.
+  * sub points are added by using a tab before the symbol
+  * note, dot points need to have a spare line before them
+  
+1. Numbered lists do not need to have a spare line beforethem
+2. Type the number, then a full stop, then a space to create a numbered list
+3. like this one!
+
+You can also **Bold** , *Italicise* or ~stikethrough~ your text. Bold uses two ** or __ where as italics uses one * or _ and strikethrough uses ~ .
+
+Embed equations using the dollar signs.
+
+$$y = mx + c$$
+Including adding greek letters, superscripts or subscripts
+$$log(\mu) = \beta_0 + \beta_1 * elev$$
+You can format text to look like code by using a single backtick around the code words, like `cars` is the name of the dataset. You can use inline code by using three backticks, like to find out that the mean speed recorded in the cars dataset is ```mean(cars$speed)``` .
+
+Add the symbols "<br>" will add a break.
+<br>
+
+Three * stars together will create a horizontal line to break the document. 
+
+***
+
+# Chunk options
+
+Use a chunk name, but this must be unique.
+
+When `include = FALSE` is included, the results and code are not included in the report. The code is run and the results can be used.
+When `echo = FALSE`, the code is hidden but the results are shown.
+When `eval = FALSE`, the code will not run but the code will be shown.
+When `collapse = TRUE`, the code and the output text will be shown in the same box.
+When `warning = FALSE`, prevents warning messages from appearing entirely.
+When `error = TRUE`, the report will knit but the error will be displayed. Apply this globally.
+
+# The YAML header
+YAML is very specific with its layout and number of spaces or tabs.
+
+Some basic components are:
+
+- `title`: "This is the page title"
+- `author`: "Author's name goes here"
+- `date`: this could be a character string by typing the date out manually, or you could use "`r format(Sys.time(), '%d %B %Y)`" to get today's date
+- `output`: there are a few common formats including html and pdf.
+- within the output component, you could specify to use a table of content using `toc` or number the sections using `number_sections`. For a html output, the table of content can sit on the side of the page using `toc_float: true`. `toc_float` also has a smooth scroll and collapsed options.
+output:
+  html_document:
+    toc: true
+    toc_depth: 2
+    number_sections: true
+
+# Using R Markdown to show results straight from R
+
+(or, no more copying and pasting!)
+
+## Looking at some data
 ```{r cars, message=FALSE, warning=FALSE}
 data(cars) # Load example dataset
 head(cars)
 summary(cars)
 ```
 
-# Useful things for your Supplementary Material
-
-# Big heading
-## Little heading
-### Even littler heading
-#### Even littler again heading
-
-* dot points
-
-You can also **Bold** or *Italicise* your text
-
-Or embed equations using dollar signs:
-$$y = mx + c$$
-Including adding greek letters, superscripts or subscripts
-$$log(\mu) = \beta_0 + \beta_1 * elev$$
-
-# Using R Markdown to show results straight from R
-
-(or, no more copying and pasting!)
 
 ## Cool tables using kable
 ```{r message=FALSE, warning=FALSE}
@@ -67,9 +119,12 @@ coeffs = data.frame(coef(m))
 conf = data.frame(confint(m))
 
 model.table = cbind(coeffs, conf)
-colnames(model.table) = c("Coef", "Lower 95% CI", "Upper 95% CI")
+# colnames(model.table) = c("Coef", "Lower 95% CI", "Upper 95% CI")
 
-kable(model.table)
+kable(model.table,
+      col.names =  c("Coef", "Lower 95% CI", "Upper 95% CI"),
+      align = c("ccc"), # where alignment is defined using a single letter. l for left, c for centre and r for right, and one letter for each column
+      caption = "1.2 Model coefficients table.") 
 ```
 
 ## Embedding plots using ggplot
@@ -81,8 +136,14 @@ cars.re = cars %>% pivot_longer(cols=c(speed,dist), names_to='name', values_to='
 boxplot = ggplot(cars.re) + geom_boxplot(aes(x=name,y=value))
 boxplot
 
-plot = ggplot(cars, aes(x=speed, y=dist)) + geom_point() + geom_smooth() + theme_bw()
+plot = ggplot(cars, aes(x = speed, y = dist)) + geom_point() + geom_smooth() + theme_bw()
 plot
+```
+
+We can also add the specifics of how to format the plot into the chunk header. Here I have included `fig.align` to centre the figure (other options are left and right), set the width and height using `fig.width` and `fig.height` in inches, and added a figure caption using `fig.cap`. Other options for the plot size would be to use `out.width` and `out.height` which are specified as percentages and in quotation marks.
+
+```{r message=FALSE, warning=FALSE, fig.align="center", fig.width=6, fig.height=6, fig.cap="Figure: Here is a really important caption."}
+ggplot(cars, aes(x = speed, y = dist)) + geom_point() + geom_smooth() + theme_bw()
 ```
 
 ## Side by side plots with cowplot
