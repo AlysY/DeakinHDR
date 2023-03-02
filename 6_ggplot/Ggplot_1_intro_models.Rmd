@@ -12,14 +12,16 @@ Today's session (3rd of March 2023):
 - facet
 - regression model outputs
 
-Next session (17th of March) is a discussion on the 'Fundamentals of Data Visualisation' by Claus O Wilke, available at  https://clauswilke.com/dataviz/index.html . Please read chapter 1 Introduction, chapter 2 visualising data, and chapter 5 directory of visualisations.
-The session after (21st of April) continues the discussion of crafting a figure. Please read chapter 4 color scales, chapter 19 common pitfalls of color use, chapter 21 multi-panel figures and chapter 29 telling a story and making a point.
+Next session (17th of March) is a discussion on the 'Fundamentals of Data Visualisation' by Claus O Wilke, available at  https://clauswilke.com/dataviz/index.html . Please read chapter 1, 2, 5 and 16.  
+
+The session after (21st of April) continues the discussion of crafting a figure. Please read chapter 4, 19, 21 and 29.
 
 *Resources:*
-https://ggplot2.tidyverse.org/reference/index.html
-https://posit.co/resources/cheatsheets/?type=posit-cheatsheets&_page=2/ 
-https://ggplot2-book.org
-http://www.sthda.com/english/wiki/ggplot2-essentials
+
+https://ggplot2.tidyverse.org/reference/index.html  
+https://posit.co/resources/cheatsheets/?type=posit-cheatsheets&_page=2/   
+https://ggplot2-book.org  
+http://www.sthda.com/english/wiki/ggplot2-essentials  
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -46,10 +48,10 @@ For data visualisation, we have data and we use the values in the data to become
 In ggplot, the method to build the plot needs to specify 3 components: the data, the aesthetics and the geom (or plot type).
 
 You need to:
-1. Start by calling a ggplot using `ggplot()`
-2. Specify the data using the "data" argument `ggplot(data =  )`
-3. Specify the x and y variables using the aesthetics argument `ggplot(data = , aes(x= , y = ) )`
-3. Specify  what sort of plot you make ggplot to make using a second line joing to the `ggplot()` with a `+`
+1. Start by calling a ggplot using `ggplot()`.  
+2. Specify the data using the "data" argument `ggplot(data =  )`.  
+3. Specify the x and y variables using the aesthetics argument `ggplot(data = , aes(x= , y = ) )`.  
+3. Specify  what sort of plot you make ggplot to make using a second line joing to the `ggplot()` with a `+`.  
 
 Lets show some examples using the cars dataset pre-loaded in R
 
@@ -168,7 +170,7 @@ ggplot(data = iris, aes(x = Sepal.Length, y = Sepal.Width, color = Petal.Length)
 
 ```
 
-Try using chatGPT to help find the code you want.
+Try using chatGPT to help find the code you want.   
 ![Ask chatGPT how to build and alter the plots. You can specify the packages that you want to use (e.g. ask it to use ggplot2 package.)](chatGPT_ggplot_aesthetics.png)
 
 ## Data manipulation
@@ -212,7 +214,7 @@ ggplot(data = iris, aes(x = Sepal.Length, y = Sepal.Width, color = Species)) +
   geom_point(show.legend = FALSE) # check
 ```
 
-Try using chatGPT to help find the code you want.
+Try using chatGPT to help find the code you want.   
 ![Ask chatGPT how to modify the legend or the theme)](chatGPT_ggplot_legend bottom.png)
 
 
@@ -368,7 +370,7 @@ ggplot(data = m_eval_df, aes(y = vars, x = Estimate)) +
 Try using chatGPT to help find the code you want.  
 
 With general language:  
-
+   
 ![Ask chatGPT how to change the order of the variables in the plot using plan language.)](chatGPT_ggplot_levels1.png)
 
 With specific R terminology:  
