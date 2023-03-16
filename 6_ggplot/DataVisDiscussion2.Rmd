@@ -1,0 +1,15 @@
+---
+title: "Data Visualisations Dicussion 2"
+author: "Alys Young and the Deakin coding committee"
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introduction
+
+## Resources
+http://www.sthda.com/english/wiki/the-elements-of-choosing-colors-for-great-data-visualization-in-r

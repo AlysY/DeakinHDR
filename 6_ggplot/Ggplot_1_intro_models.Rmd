@@ -51,7 +51,7 @@ You need to:
 1. Start by calling a ggplot using `ggplot()`.  
 2. Specify the data using the "data" argument `ggplot(data =  )`.  
 3. Specify the x and y variables using the aesthetics argument `ggplot(data = , aes(x= , y = ) )`.  
-3. Specify  what sort of plot you make ggplot to make using a second line joing to the `ggplot()` with a `+`.  
+3. Specify  what sort of plot you make ggplot to make using a second line joining to the `ggplot()` with a `+`.  
 
 Lets show some examples using the cars dataset pre-loaded in R
 
@@ -133,7 +133,7 @@ ggplot(data = iris, aes(x = Sepal.Length, y = Sepal.Width, colour = Species)) +
   geom_smooth()
 ```
 
-To investigate another continueous variable on the graph at the same time, it can also be added as an aesthetic. Here the point colour is given by the petal length. The shape and line type aesthetics only suits a categorical variable. All other aesthetic options can be used for either categorical or continuous variables.
+To investigate another continuous variable on the graph at the same time, it can also be added as an aesthetic. Here the point colour is given by the petal length. The shape and line type aesthetics only suits a categorical variable. All other aesthetic options can be used for either categorical or continuous variables.
 ```{r colour_by_aes2}
 ## Colour by petal length
 ggplot(data = iris, aes(x = Sepal.Length, y = Sepal.Width, colour = Petal.Length)) +
@@ -211,7 +211,7 @@ ggplot(data = iris, aes(x = Sepal.Length, y = Sepal.Width, color = Species)) +
 ```{r legend_rm}
 ## Hide legend
 ggplot(data = iris, aes(x = Sepal.Length, y = Sepal.Width, color = Species)) +
-  geom_point(show.legend = FALSE) # check
+  geom_point(show.legend = FALSE)
 ```
 
 Try using chatGPT to help find the code you want.   
@@ -223,7 +223,7 @@ There are also methods to change how the plot looks. We will dive into themes ne
 ## Add premade theme
 ggplot(data = iris, aes(x = Species, y = Sepal.Width)) +
   geom_boxplot() +
-  theme_bw() # try theme_light, theme_dark, theme_classic,
+  theme_dark() # try theme_light, theme_dark, theme_classic,
 ```
 
 The length, tick marks and names of the x and y axis can be modified using scale functions, for example continuous scales are documented here https://ggplot2.tidyverse.org/reference/scale_continuous.html .  
@@ -232,8 +232,8 @@ The length, tick marks and names of the x and y axis can be modified using scale
 ggplot(data = iris, aes(x = Sepal.Length, y = Sepal.Width)) +
   geom_point() +
   scale_x_continuous(limits = c(2, 8),
-                     breaks = seq(2, 8, 1), # sequence from 0 to 8 by 1. Equivalent to 0:8
-                     minor_breaks = seq(0, 8, 0.2)
+                     breaks = seq(2, 8, 1), # sequence from 0 to 8 by 1. Equivalent to 2:8
+                     minor_breaks = seq(1, 8, 0.2)
                      )
   
   
@@ -280,14 +280,14 @@ Use the function `ggsave` .
 # # Save the most recent plot by using ggsave directly afterwards
 # ggplot(data = iris, aes(x = Sepal.Length, y = Sepal.Width)) +
 #  geom_point()
-# 
+#
 # ggsave("your/folder/directory/here/plot.png")
 
 # # Save a specific plot by assigning it a name
 # # Save the most recent plot by using ggsave directly afterwards
 # p <- ggplot(data = iris, aes(x = Sepal.Length, y = Sepal.Width)) +
 #  geom_point()
-# 
+#
 # ggsave(p, "your/folder/directory/here/plot.png")
 
 
@@ -333,6 +333,7 @@ summary(m2)
 
 m_out <- summary(m2)
 m_eval <- m_out$coefficients
+class(m_eval)
 m_eval_df <- as.data.frame(m_eval)
 m_eval_df$vars <- rownames(m_eval_df)
 m_eval_df <- rename(m_eval_df, st_error = `Std. Error`)
@@ -378,7 +379,7 @@ With specific R terminology:
 ![Ask chatGPT how to change the order of the variables in the plot using specific terminology.)](chatGPT_ggplot_levels2.png)
 
 
-The `effects` package can also be useful to plot the impact of the variable on the reponse variable. To view the effect of all the variables, you can `plot` all of the effects of a model using `plot(allEffects(m))`. To plot one variable, you can use the `effect` function instead and specify the variable by the name. Here we have specified to only see the petal width.
+The `effects` package can also be useful to plot the impact of the variable on the response variable. To view the effect of all the variables, you can `plot` all of the effects of a model using `plot(allEffects(m))`. To plot one variable, you can use the `effect` function instead and specify the variable by the name. Here we have specified to only see the petal width.
 ```{r model_effects, message=FALSE, warning=FALSE}
 library(effects)
 plot(allEffects(m2))

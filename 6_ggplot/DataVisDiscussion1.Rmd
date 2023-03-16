@@ -1,0 +1,73 @@
+---
+title: "Data Visualisations Dicussion 1"
+author: "Alys Young and the Deakin coding committee"
+date: '`r Sys.Date()`'
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introduction
+chapter 1, 2, 5 and 14
+https://clauswilke.com/dataviz/index.html 
+
+Data visualization first and foremost has to accurately convey the data.
+
+We talk about science communication but we rarely are taught how to craft a good plot.
+
+Note: Their 'ugly', 'bad' and 'wrong' figures. Different areas of science have specific structures - e.g. in ecology don't use horizontal lines or write the values in figures
+
+Repeatability
+saving you time when you need to rerun
+
+
+## Graph types
+https://datavizcatalogue.com  
+https://r-graph-gallery.com  
+
+  
+Choosing a intuiative graph - the tepmerature plots
+Either a line plot or a grid
+Because I work with spatial data, I'm more used to looking at a grid as space rather than time. I dont like that the y could be in any order
+
+Never have 2 axis of different things
+
+The quantile-quantile or qq-plot is good for representing model assumptions.
+
+
+With Violin plots, I like it overlayed with a boxplot or the data points.
+
+Pie-charts  - I've only ever seen them used in like review papers to show were papers came from
+
+Tree-map - similar to how you would plot at regression tree model like random forest.
+
+Correlogram - correlation plots. We showed last time how to do that in ggplot
+
+
+Choropleth - real name for a heat map
+
+
+  
+## Aesthetics
+In the introduction of chapter 2, the book describes plots as simply turning data values into features, also calling the features aesthetics. See how that relates to ggplot and the aes function.
+
+Scales
+- used for the shapes and colours
+
+Scroll through the bbc package and discuss the plot compositions
+https://bbc.github.io/rcookbook/#how_to_create_bbc_style_graphics
+  
+
+## Other notes
+I keep a folder of screenshots from papers of plots and figures I liked.
+If I have a specific application fro the graph type, then I make a note on the graph of what I was thinking and pop it in the chapter specific folder
+
+Same for slides
+
+## Resources
+Many resources compiled for data visualisations in R https://www.bigbookofr.com/data-visualization.html  
+For more information about 'the grammar of graphics' http://vita.had.co.nz/papers/layered-grammar.pdf  
+Using ggplot, https://r4ds.had.co.nz/data-visualisation.html and http://www.cookbook-r.com/Graphs/ and https://cedricscherer.netlify.app/2019/08/05/a-ggplot2-tutorial-for-beautiful-plotting-in-r/ and https://m-clark.github.io/data-processing-and-visualization/ggplot2.html#piping http://r-statistics.co/Top50-Ggplot2-Visualizations-MasterList-R-Code.html   
+https://exts.ggplot2.tidyverse.org/gallery/
