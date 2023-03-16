@@ -19,13 +19,14 @@
 
 # Write why to do the code above the code
   # And notes on one tab in
-head(iris) # and addtional comments about the single line of code after it
+head(iris) # and additional comments about the single line of code after it
 
 # Use 4 or more hash, hyphen or lines to create headings which show up in the table of contents 
 # Hashes #### 
 # Hyphen ----
 # Equals ====
 
+# Subheading that don't show up in the table of reference by adding a * on the end -------------------------------------*
 
 ##***********##
 ## 1. Set Up ## -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -35,7 +36,7 @@ head(iris) # and addtional comments about the single line of code after it
 
 
 # Clean up your environment to start
-rm(list=ls()) # this removes everything in your environment
+rm(list = ls()) # this removes everything in your environment. Not don't uninstall packages
 
 
 # Packages ----------------------------------------------------------------
@@ -78,6 +79,23 @@ iris <- read.csv(file)
 
 
 
+
+## Directors -------------------------------------------
+dir <- list()
+
+dir$wd <- file.path(getwd(), "1_R_Tips_and_SetUp")
+dir$data_raw <- file.path(dir$wd, "Data_raw")
+dir$out <- file.path(dir$wd, "Outputs", Sys.Date())
+
+if (file.exists(dir$out) == FALSE){dir.create(dir$out)}
+
+
+
+ggsave(file.path(dir$out, "my_plot.png"))
+
+
+
+
 ##*********##
 ## 2. Data ## -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ##*********## 
@@ -116,7 +134,7 @@ iris_ras
 # Write code in another file which makes things in an environment
 # use the function source to add those objects to your environment
 
-source("Scripts/1_DataCleaning.R")
+source("1_DataCleaning.R")
 
 
 
