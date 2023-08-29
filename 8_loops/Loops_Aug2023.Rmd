@@ -1,0 +1,473 @@
+---
+title: "For loops"
+author: "Alys Young"
+date: "2023-08-25"
+output: html_document
+---
+
+# Learning about For Loops
+
+## What are they? 
+For loops are a structure used to repetitively/iteratively execute code over a sequence of data, such as vectors/dataframes/lists. 
+
+All for loops follow this basic structure
+
+for (index in sequence) {
+    expression
+}
+
+Today we are going to cover a few main points:
+ 1) indexing
+ 2) how to catch a loops output
+ 3) conditional statements (at the end of code if we have time)
+
+# Indexing
+Indexing within for loops allows your code to iterate over elements of a sequence, such as vectors, matrices or lists. 
+Doing this allows you access and manipulate individual elements in the sequence as you iterate through the loop. 
+
+Take this example:
+```{r firstLoop1}
+for (i in 1:3) { 
+  print(i) 
+  }
+```
+
+The index takes on the values 1:3 in each iteration of the loop, shown by printing the index for each iteration (i). 
+
+## Hands on practice
+```{r firstLoop2}
+for (i in 1:10) { 
+  print(i * 2) # changes the value of the vector
+  } 
+```
+
+You don't have to use i as the index. 
+```{r firstLoop3}
+for (num in 1:10) { 
+  print(paste("The number is:", num)) # changes the name of the index
+  } 
+```
+
+## practice changing the values
+You can take the vector to loop over outside. Fill the below for loop with your own code.
+```{r practice_1}
+years <- 2020:2023
+
+for(i in years){
+  
+}
+```
+
+It also doesn't have to be continuous. Fill the below for loop with your own code.
+```{r practice_2}
+years <- c(2012, 2018, 2023)
+
+for(y in years){
+  
+}
+```
+
+or even a number! 
+```{r firstLoop6}
+# Create Vector
+coding_committee <- c("Kyle", "Simone", "Pankti", "Alys", "Michael")
+
+# Run through vector in for loop
+for(name in coding_committee) {
+          print(paste(name, "is a coding committee member."))
+}
+```
+
+
+Several methods to use the vector; either directly, or using a number which is the vector to then subset it.
+
+You'll notice in the chunk below we use [i]. This is to index each element in the vector. For vectors, you use single square brackets ( [i] ) for indexing.
+```{r firstLoop7}
+# Create Vector
+coding_committee <- c("Kyle", "Simone", "Pankti", "Alys", "Michael")
+
+# Run through vector in for loop
+for(i in 1:length(coding_committee)) {
+              print(paste(coding_committee[i], "is a coding committee member."))
+}
+
+```
+
+You can also use `seq_along()`.
+```{r firstLoop8}
+# Create Vector
+coding_committee <- c("Kyle", "Simone", "Pankti", "Alys", "Michael")
+
+# Run through vector in for loop
+for(i in seq_along(coding_committee)) {
+              print(paste(coding_committee[i], "is a coding committee member."))
+}
+```
+
+
+Debug using `i = 1`.
+```{r firstLoop7}
+coding_committee <- c("Kyle", "Simone", "Pankti", "Alys", "Michael")
+# for(i in 1:length(coding_committee)) {
+i = 1
+print(paste(coding_committee[i], "is a coding committee member.")) 
+# }
+
+# or through using [[i]]
+coding_committee[1]
+
+```
+
+Practice debugging the loop below:
+```{r practice_3}
+# Create Vector
+coding_committee <- c("Kyle", "Simone", "Pankti", "Alys", "Michael")
+
+# Run through vector in for loop
+for(name in coding_committee) {
+  name * 2
+}
+```
+
+Practice debugging the loop below:
+```{r practice_4}
+years <- list(c(2012, 2018, 2023))
+
+for(y in seq_along(years)){
+  print(paste("The analysis year is:", y))
+}
+```
+
+## Saving data out  
+
+Easy method that most people start with is not the best method
+Best practice is to build something empty to capture the output of the for loop, such as using `c()` for vectors, `rbind()` for dataframes, or `list()` to create an empty list. 
+
+```{r loop_saveout1}
+coding_committee <- c("Kyle", "Simone", "Pankti", "Alys", "Michael")
+# Create vector to catch output
+out <- c()
+
+# Run loop
+for (i in coding_committee){
+      out <- paste(coding_committee, "is a coding committee member.")
+      print(i)
+}
+
+out
+
+```
+
+```{r loop_saveout2}
+# Create an empty dataframe
+out <- data.frame(names = c(1, 4, 5, 7), col1 = rep(NA, 4), col2 = rep(NA, 4))
+
+# Loop to fill the dataframe
+for (i in 1:nrow(out)) {
+  out$col1[i] <- out$names[i] * 2
+  out$col2[i] <- out$names[i] * 3
+}
+
+# Print the filled dataframe
+print(out)
+```
+
+
+### Practice  
+Imagine you have a list of temperatures in Celsius for each day of a week. Your task is to convert each temperature to Fahrenheit using the formula:
+
+Fahrenheit = (Celsius * 9/5) + 32
+
+Write a for loop that iterates over the list of Celsius temperatures, applies the conversion formula to each temperature, and stores the converted Fahrenheit temperatures in a new list.
+
+```{r practice_3}
+# Create vector of Celsius temperatures
+celsius_temperatures <- c(31, 29, 24, 25, 27, 28, 32)
+
+# Create empty vector to catch output
+farenheit_temperatures <- c()
+  
+# Write for loop with function inside
+for(i in seq_along(celsius_temperatures)){
+  
+        farenheit_temperatures <- (celsius_temperatures * 9/5) + 32
+        
+        print(paste("Day ", i))
+}
+
+# Examine Fahrenheit temperatures
+farenheit_temperatures
+```
+
+### Lists
+For lists, you are best to create an empty list to catch the output as below. An important point to note with lists, you index them with double square brackets such as [[i]]
+
+```{r loop_saveout4}
+# Input lists
+first_names <- list("Alice", "Bob", "Charlie")
+last_names <- list("Smith", "Johnson", "Brown")
+
+# Initialize an empty list to store full names
+full_names <- list()
+
+# Loop through indices of the input lists
+for (i in 1:length(first_names)) {
+  full <- paste(first_names[[i]], last_names[[i]])
+  full_names <- append(full_names, full)
+}
+
+# Print the list of full names
+print(full_names)
+
+# Bind to dataframe
+full_names.df <- do.call(rbind, full_names)
+full_names.df
+```
+
+```{r loop_saveout5}
+# Load the iris dataset
+data(iris)
+
+head(iris)
+
+# Create a list by splitting the iris data set by species
+iris.list <- split(iris, iris$Species)
+
+# Create an empty list to store the results
+average_petal_widths_list <- list()
+
+# Run the loop to calculate average petal width for each species and store in the list
+for (i in seq_along(iris.list)) {
+  
+  # Calculate average petal width for each species
+  petal_widths  <- iris.list[[i]]$Petal.Width
+  avg_width     <- mean(petal_widths)
+  
+  # Save it directly in output list 
+  average_petal_widths_list[[i]] <- list(species = names(iris.list)[i], avg_width = avg_width)
+  
+  print(names(iris.list)[i])
+}
+
+# Convert the list of results to a matrix
+average_petal_widths_matrix <- do.call(rbind, average_petal_widths_list)
+
+# Convert the matrix to a data frame
+average_petal_widths_df <- as.data.frame(average_petal_widths_matrix)
+
+# View output
+print(average_petal_widths_df)
+
+
+# But can also do this other ways
+library(tidyverse)
+# Create a data frame by splitting the iris data set by species
+average_petal_widths_df2 <- iris %>%
+                                group_by(Species) %>%
+                                summarise(avg_width = mean(Petal.Width))
+
+# View output
+print(average_petal_widths_df2)
+
+average_petal_widths_df == average_petal_widths_df2
+```
+
+The below chunk is an example of a for loop used on a list, which adds a row to each trip from the last destination a boat had, back to their home port as this was missing in the data. 
+
+For data in for loops, you will often take the "split-apply-combine" approach. It's a fundamental concept in data analysis and manipulation, particularly when working with data that is organized in groups or categories Here's a breakdown of the steps in your code using the terminology of split-apply-combine:
+
+  1) Split: Below we use the split() function to split the data into a list of subsets based on the levels of interest (in this case, respondent and trip).
+
+  2) Apply: You then loop through each subset (each element of the list) using a for loop. Within the loop, you perform calculations and modifications on each subset independently.
+
+  3) Combine: After applying the desired calculations within the loop, you create an output list (respondent_trip.list) where each element represents the result for each group.
+
+  4) Final Combination: Finally, you use do.call(rbind, respondent_trip.list) to combine the individual results in the output list into a single data frame (edgelist_trip_home) which contains all of the rows from the vessels last destination on their trip back to their homeport. This is then combined with the original data for the complete edgelist.
+
+This code essentially applies the "apply" step within the loop, but the overall process closely follows the split-apply-combine strategy. This strategy is very powerful and is often used in situations where you need to analyze data at a group level and then combine the results back together for further analysis or reporting.
+
+
+```{r Example for Loop on List}
+# Create some example data
+edges_home <- data.frame(respondent_id = c(995, 995, 995, 995, 995, 846, 846, 846, 727, 727, 727, 727, 727),
+                          trip = c(1, 1, 2, 2, 2, 1, 1, 1, 1, 2, 2, 2, 2),
+                          stop = c(1, 2, 1, 2, 3, 1, 2, 3, 1, 2, 3, 4, 5),
+                          home_cluster = c("marina 1", "marina 1", "marina 1", "marina 1", "marina 1",
+                                           "mooring 1", "marina 1", "mooring 1",
+                                           "marina 5", "marina 5", "marina 5", "marina 5", "marina 5"),
+                          from = c("island 1", "marine reserve 1", "island 2", "marine reserve 2", "beach 1",
+                                   "marine reserve 1", "island 1", "marine reserve 2",
+                                   "island 1", "island 2", "marine reserve 1", "beach 1", "beach 2"),
+                          to = c("marine reserve 1", "island 2", "marine reserve 2", "beach 1", "island 2",
+                                 "island 1", "marine reserve 2", "beach 1",
+                                 "island 2", "marine reserve 1", "beach 1", "beach 2", "marine reserve 2"),
+                          edgename = c("island 1 to marine reserve 1", "marine reserve 1 to island 2",
+                                       "island 2 to marine reserve 2", "marine reserve 2 to beach 1",
+                                       "beach 1 to island 2",
+                                       "marine reserve 1 to island 1", "island 1 to marine reserve 2",
+                                       "marine reserve 2 to beach 1",
+                                       "island 2 to marine reserve 1", "marine reserve 1 to beach 1",
+                                       "beach 1 to beach 2", "beach 2 to marine reserve 2",
+                                       "marine reserve 2 to marine reserve 2"))
+
+# View the created dataframe
+print(edges_home)
+
+
+# split into list based on respondent and trip
+trip.list <- split(edges_home, list(edges_home$respondent_id, edges_home$trip))
+
+# Make an empty list to catch the loop outputs
+respondent_trip.list <- list()
+
+# Loop
+for (i in seq_along(trip.list)) {
+  
+      respondent_id <- trip.list[[i]]$respondent_id[1]
+      to_home       <- trip.list[[i]]$home_cluster[1]
+      last_stop     <- trip.list[[i]]$to[nrow(trip.list[[i]])]
+      stop_last     <- as.numeric(trip.list[[i]]$stop[nrow(trip.list[[i]])]) + 1
+      
+      respondent_trip.list[[i]] <- trip.list[[i]][nrow(trip.list[[i]]),] %>%
+                                        mutate(from = last_stop, 
+                                               to = to_home, 
+                                               stop = stop_last,
+                                               edgename = paste(from, to, sep = " to "))
+      print(i)
+}                           
+
+# Turn our output list back into a single dataframe
+edgelist_trip_home <- do.call(rbind, respondent_trip.list)
+edgelist_trip_home
+
+# Bind with original edgelist
+edgelist_complete <- rbind(edges_home, edgelist_trip_home)
+
+edgelist_complete <- edgelist_complete %>%
+                                      arrange(respondent_id, trip, stop)
+
+```
+
+
+# Extensions
+
+## Add and if statement
+
+Instead of specifying the blank dataframe beforehand inside the loop write a statement which will make the dataframe when it is the first loop.
+
+```{r ext_ifelse}
+# Example grade data
+names <- c("Alice", "Bob", "Charlie")
+scores <- c(85, 92, 78)
+
+# Initialize an empty dataframe
+out <- data.frame()
+
+# Run for loop
+for (i in seq_along(names)) {
+  name <- names[i]
+  score <- scores[i]
+  
+  # Create a dataframe on the first loop iteration
+  if (i == 1) {
+    out <- data.frame(Name = name, Score = score)
+  } else {
+    # Append to the existing dataframe on subsequent iterations
+    new_row <- data.frame(Name = name, Score = score)
+    out <- rbind(out, new_row)
+  }
+}
+
+out
+```
+
+## Statements to regulate for loops
+Using an if statement combined with break will stop the for loop once a specific condition is met.
+```{r ext_break}
+# Animal names
+animals <- c('koala', 'cat', 'dog', 'panda')
+
+# Run for Loop
+for (animal in animals) {
+  
+    if (nchar(animal) < 4) {
+        break
+    }
+    print(animal)
+}
+```
+
+Using an if statement combined with next will skip the indexed part of the sequence where the condition is not met. 
+```{r ext_next}
+# Animal names
+animals <- c('koala', 'cat', 'dog', 'panda')
+
+# Run for loop
+for (animal in animals) {
+    if (nchar(animal) < 4) {
+        next
+    }
+    print(animal)
+}
+```
+
+## Add a warning
+Here is an example of how to use a warning and a stop to error check inside the loop
+```{r ext_warnings}
+# Create year vector
+years <- 2001:2023
+
+# Run for loop
+for(i in 1:length(years)) {
+  
+          if(!(is.numeric(years[i]))) stop("Years should be a numeric values with 4 digits")
+          if(years[i] < 2010) warning("Your data is old")
+
+          print(paste("The year is:", years[i]))
+}
+```
+
+## Nested loops
+Loop inside a loop
+The below example is running through the sequence, and multiples of itself up to its own value. E.g., 1x1, 2x1, 2x2, 3x1, 3x2, 3x3 etc.
+```{r Basic Nested Loop Example}
+for (i in 1:5){
+    for (j in 1:i)
+    {
+        print(i * j)
+    }
+}
+```
+
+You can use nested loops on dataframes
+```{r Nested Loop with Dataframe}
+super_sleepers <- data.frame(rating = 1:4,
+                             animal = c('koala', 'hedgehog', 'sloth', 'panda'),
+                             country = c('Australia', 'Italy', 'Peru', 'China'),
+                             avg_sleep_hours = c(21, 18, 17, 10))
+
+print(super_sleepers)
+
+for (row in 1:nrow(super_sleepers)) {
+    for (col in 1:ncol(super_sleepers)) {
+        print(paste('Row', row, 'col', col, 'value', super_sleepers[row, col]))
+    }
+}
+```
+
+You can use for loops on matrices too. 
+```{r For Loop on matrix}
+# Create matrix
+my_matrix <- matrix(1:9, nrow = 3, ncol = 3)
+my_matrix
+
+# Now run loop
+for (row in 1:nrow(my_matrix)) {
+    for (col in 1:ncol(my_matrix)) {
+        print(paste('Row', row, 'col', col, 'value', my_matrix[row, col]))
+    }
+  
+}
+```
+
+

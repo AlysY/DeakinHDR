@@ -24,6 +24,7 @@ Haven't covered spatial data (e.g maps) - this will come in a future session !
 Today we are going to keep looking at the linear model which predicts the sepal width with variables within the iris package.
 ```{r model_setup}
 library(ggplot2)
+library(dplyr)
 data_model <- iris %>% 
   mutate(petal_shape = Petal.Length / Petal.Width)
 
