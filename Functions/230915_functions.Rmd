@@ -1,0 +1,621 @@
+---
+title: "Functions tutorial"
+author: "Simone Stevenson"
+date: "19/07/2022"
+output:
+  pdf_document: default
+  html_document: default
+self_contained: yes
+---
+
+# Benefits of writing functions
+
+- readability
+- less typing/effort
+- fewer errors
+- reuse code across projects
+
+
+
+# Arguments
+
+Arguments are the bits of code that aren't duplicated across your repeating code
+(Make this into an example where species is an input)
+
+Number of arguments technically unlimited but more == difficult to debug
+
+- data arguments (what are you changing)
+- detail arguments (how are you doing it)
+
+data args should go first
+Get people to sort arguments from a common function into types
+
+Setting default values to your argument (eg look at median)
+
+Using ... to include arguments to other functions within you function (eg if it uses mean)
+
+# Naming functions
+
+Variable or objects are nouns (eg df), functions are verbs (filter)
+
+Best practice to include verbs in a function - can you think of examples that don't
+follow this practice?
+
+understanding code more important than quick typing
+
+# Organising functions in your code
+ put em up top
+ source
+ R markdown - need to go in their own chunk
+
+# Outputs
+
+Functions return the final value so you can assign outside
+
+# Naming arguments
+
+General
+
+
+# Libraries
+
+```{r libraries, warning=FALSE, error=FALSE, message=FALSE}
+
+library(tidyverse) # wrangle data
+library(ggplot2) # make plots
+library(gridExtra) # display multiple plots
+library(pokemon) # loads pokemon data
+library(kableExtra) # makes nice tables
+
+```
+
+
+# Write a function template
+
+# Syntax for writing a function
+
+my_fun <- function(arg1, arg2) {
+
+# Do something with args 1 and 2
+
+}
+
+This bit is called the function's 'signature': function(arg1, arg2)
+Can think of it as the user interface. The parts inside are the 'body'
+
+```{r template}
+
+# Making a function
+
+add_ten <- function(x) { #open brackets
+  
+  x + 10 # do something in the body
+  
+} #close brackets
+
+# Using a function
+
+add_ten(10)
+
+```
+
+
+# Using existing functions
+
+How do we know what arguments a function takes? Let's look at the function 'cor'
+
+
+
+```{r gets args}
+
+args(cor)
+formals(cor)
+?cor # more detail
+cor() #hover ur mouse
+
+```
+
+
+What types or arguments are there?
+
+- Data arguments (what are we going to perform actions on?)
+- Detail arguments (how are we going to do it?)
+
+```{r}
+
+# Let's look at cor() again, which is which?
+?cor
+
+# What about sample?
+
+?sample
+
+```
+
+
+How do you enter the arguments to a function?
+
+1. Enter them by position order (look up the order using args(function))
+2. Enter them by name (name = value)
+3. Common/mandatory arguments by position, rare/optional arguments by name (best practice/most 
+common convention)
+
+
+```{r entering arguments}
+
+args(median)
+
+# Entering arguments - what do we think of this?
+
+median(TRUE, x = iris$Sepal.Length)
+
+# How else might we do it?
+median()
+
+```
+
+# Fill in an argument in the body
+
+```{r arguments}
+
+multiply_things <- function(x, multiplier) { #open brackets
+  
+  x * # what goes here?
+  
+  
+}
+
+```
+
+# Fill in the arguments in the signature
+
+```{r arg signature}
+
+subtract_things <- function(,){
+  
+x - y
+  
+}
+
+```
+
+# Add a default value for one of the arguments
+
+```{r defaults}
+
+add_things <- function(x, n){
+  
+x + n
+  
+}
+
+# Use the function
+add_things(10, 5)
+
+# What if we forget an argument?
+
+add_things(10)
+
+# What if we want to put in a default value to add, when the user doesn't specify it?
+
+add_things_fancy <- function(x, n = 5){
+  
+x + n
+  
+}
+
+add_things_fancy(10)
+
+```
+# Add your own default value for replace argument
+
+```{r add ur own default}
+
+replace_na <- function(x, replace) {
+  
+  ifelse(is.na(x), replace, x) 
+  
+}
+
+replace_na(NA,0)
+
+replace_na(NA)
+
+```
+
+# Add documentation
+
+```{r document}
+
+#' Replace NA Values in a Vector
+#'
+#' This function replaces NA values in a vector with a specified replacement value.
+#'
+#' @param x A vector containing elements with possible NA values.
+#' @param replace The value to replace NA values with.
+#' @return A new vector with NA values replaced by the specified replacement value.
+#'
+#' @examples
+#' x <- c(1, NA, 3, NA, 5)
+#' result <- replace_na(x, 0)
+#' result
+#'
+#' @export
+
+replace_na <- function(x, replace) {
+  
+  # Continue with function
+  ifelse(is.na(x), replace, x) 
+  
+}
+
+replace_na(NA, "wrong")
+
+```
+
+# Add a check to the input arguments 
+
+This is called an assertion, there are lots of shortcut packages to make writing
+these easier
+
+The stop function abandons the function and returns an error message (this is where
+all those annoying error messages in your console are born)
+
+```{r check}
+
+add_things <- function(x, n = 5){
+
+if(!is.numeric(x)) {stop("error, x needs to be numeric")}
+  
+x + n
+  
+}
+
+add_things("green")
+
+```
+
+# Add a numeric check to our replace_na function
+
+```{r na check}
+
+replace_na <- function(x, replace) {
+  
+  # Check that replace is numeric
+  
+  
+  # Continue with function
+  ifelse(is.na(x), replace, x) 
+  
+}
+
+replace_na(NA, "wrong")
+
+```
+
+
+
+
+
+# Write the body of this function
+
+```{r write body}
+
+divide_things <- function(x, n){
+  
+ 
+}
+
+```
+
+# Write a full function - signature and body
+
+Write a function to take the mean of a vector, then add a value to it
+
+Add the roxygen documentation as well
+
+```{r write function}
+
+add_to_mean <- function() {
+  
+  
+  
+}
+```
+
+# Make some plots
+
+Functions don't just take individual values, or return numbers. 
+
+Perhaps you want to make an identical plot for each of your sampling sites or species?
+
+## Here is a simple function to make a histogram of the sepal length column in
+the iris dataframe
+
+```{r histo}
+
+summary(iris) # Have a quick look at our data
+
+plot_sepal_length_hist  <- function(data) {
+ 
+   ggplot(data, # The dataframe our column is in
+          aes(x = Sepal.Length)) + # Look at the distribution of values in the sepal length column
+    geom_histogram() # We want our plot to be a histogram
+  
+}
+
+plot_sepal_length_hist(iris)
+
+```
+
+## Custom color
+
+Add an argument to the function that allows us to change the colour of the bars
+
+```{r add color}
+
+plot_sepal_length_hist <- function(data, ___ ) {
+  
+  ggplot(data, aes(x = Sepal.Length)) +
+  geom_histogram(fill = ___ , 
+                   color = "black")
+  
+}
+
+```
+
+## Custom bins
+
+Add an argument to the function that lets us change how many bins to use
+
+```{r bins}
+
+plot_sepal_length_hist  <- function(data, color, ___ ) {
+  
+  ggplot(data, aes(x = Sepal.Length)) +
+    geom_histogram(fill = color, 
+                   color = "black", 
+                   bins = ___ )
+}
+
+```
+
+## Add title
+
+Add an argument to the function that lets us add a title
+
+```{r title}
+
+plot_sepal_length_hist  <- function(data, color, bins, ___ ) {
+  
+  ggplot(data, aes(x = Sepal.Length)) +
+    geom_histogram(fill = color, color = "black", bins = bins) +
+    labs(
+      title = ___,
+      x = "Sepal Length (mm)",
+      y = "Frequency"
+    )
+}
+```
+
+## Make multiple plots
+
+```{r spp data}
+
+# Split the iris dataset into separate dataframes for each species
+setosa_data <- iris %>% filter(Species == "setosa")
+versicolor_data <- iris %>% filter(Species == "versicolor")
+virginica_data <- iris %>% filter(Species == "virginica")
+
+```
+
+```{r sepal length plots}
+# Create separate plots for each species
+plot_setosa <- plot_sepal_length_hist(setosa_data,  
+                              color = "purple1", bins = 30,
+                              title = "Setosa Sepal Width Histogram")
+
+
+plot_versicolor <-  plot_sepal_length_hist(versicolor_data,  
+                              color = "coral", bins = 30,
+                                  title = "Versicolor Sepal Width Histogram")
+
+plot_virginica <-  plot_sepal_length_hist(versicolor_data,  
+                              color = "lavender", bins = 30,
+                                 title = "Virginica Sepal Width Histogram")
+
+grid.arrange(plot_setosa, plot_versicolor, plot_virginica, ncol = 3)
+
+```
+
+## How to specify column names as arguments
+
+What if we don't want to plot Sepal Length? Maybe we want to plot Sepal Width
+
+Using double curly braces allows us to use a lot of tidyverse functions that
+require you to specify a column name without quotation marks
+
+This can make a function a lot more widely applicable in some contexts
+
+```{r more general histogram function}
+
+# Function to plot histograms for any variable
+plot_histogram <- function(data, x_variable, color, bins = 20, title) {
+  
+  # Because ggplot (and other tidyverse functions) don't use quotation marks,
+  # we need to wrap our argument that specifies a column name in double curly braces
+  
+  ggplot(data, aes(x = {{ x_variable }})) + 
+    geom_histogram(fill = color, color = "black", bins = bins) +
+    labs(
+      title = title,
+      x = deparse(substitute(x_variable)),
+      y = "Frequency"
+    )
+}
+
+# Now we can apply the function to completely different columns 
+
+vers_sepal_width <- plot_histogram(versicolor_data, Sepal.Width, "turquoise", 10, "Versicolor sepal width")
+
+vers_petal_length <- plot_histogram(versicolor_data, Petal.Length, "purple2", 10, "Versicolor petal length")
+
+grid.arrange(vers_sepal_width, vers_petal_length, ncol = 2)
+
+# Or even datasets
+
+plot_histogram(mtcars, mpg, "pink", 10, "Miles per gallon")
+
+```
+
+Here's another example for selecting columns
+
+```{r select a column}
+
+get_max <- function(data, column_name){
+  
+  data %>% 
+    select({{variable_name}}) %>% 
+    filter({{variable_name}} == max({{variable_name}})) %>% 
+    pull(.)
+  
+}
+
+get_max(iris, Sepal.Length)
+
+get_max(mtcars, mpg)
+
+```
+
+# Have a go at using the double curly braces to finish this function
+
+```{r curly try}
+
+add_ten_to_column <- function(data, column_name) {
+  
+  data %>% 
+    mutate(new_column = ____ + 10)
+
+}
+
+new_iris <- add_ten_to_column(iris, ____ )
+
+head(new_iris)
+
+```
+
+# Convert code into a function
+
+You can follow these steps to convert your existing code into a function:
+
+1. Create the template with function name, signature and body
+2. Paste the script into the body
+3. Choose which parts of your script should be the arguments
+4. Replace specific values with argument names
+5. Make specific variable names more general
+6. Remove the final assignment of your output to an object
+
+There are also shortcuts I will show you a bit later :)
+
+Turn this code into a function that just takes a dataset, and a character value
+from the column egg_group_1 as its arguments.
+
+```{r make this code into a function}
+
+# Filter the dataset for "monster" in egg_group_1
+monster_pokemon <- pokemon %>%
+  filter(egg_group_1 == "monster")
+
+summary_table <- monster_pokemon %>% 
+                 summarise(egg_group_1 = "monster",
+                           species_count = n_distinct(pokemon),
+                           mean_height = mean(height, na.rm = TRUE),
+                           max_speed = max(speed, na.rm = TRUE))
+
+# Print the table
+summary_table
+
+```
+
+
+```{r pokemon function}
+
+summarise_pokemon <- function(){
+  
+}
+
+summarise_pokemon(pokemon, "monster")
+
+summarise_pokemon(pokemon, "bug")
+
+```
+
+# Now add roxygen documentation
+
+```{r pokemon documentation}
+
+```
+
+# Extra challenge 1 - select columns
+
+Make the same function, except in this one, you can select different columns
+to take the mean and speed of, then name them accordingly
+
+```{r fancy summary}
+
+fancy_summary <- function(data, group, mean_var, max_var, mean_name, max_name){
+  
+  group_data <- ____ %>% 
+                filter(egg_group_1 == ____ )
+  
+  summary_table <- group_data %>%
+                   summarise(egg_group_1 = ____,
+                             species_count = n_distinct(pokemon),
+                             ____ ,
+                             ____ )
+
+  names(summary_table) <- c("egg_group_1", "species_count", ___ , ___ )
+
+  # Print the table
+  summary_table
+  
+}
+
+fancy_summary()
+
+```
+
+
+# Extra challenge 2 - use a loop
+
+```{r loop}
+
+iris_species_list <- list(setosa_data, versicolor_data, virginica_data)
+species_colors <- c("purple1", "coral", "lavender")
+species_names <- c("setosa", "versicolor","virginica")
+
+plots_list <- list()
+
+# Loop through each species dataframe
+for (i in seq_along(iris_species_list)) {
+  
+  species_data <- ____[[i]]
+  color <- ____[i]
+  title <- paste(____[i], "Sepal Width Histogram")
+  
+  # Create the plot and store it in the list
+  ____[[i]] <- plot_histogram(species_data, 
+                                    x_variable = Sepal.Width, 
+                                    color = color, 
+                                    bins = 10,
+                                    title = title,
+                                    blah = theme_classic())
+}
+
+# Display the plots in a grid
+grid.arrange(grobs = plots_list, ncol = 3)
+
+```
+
+
+
