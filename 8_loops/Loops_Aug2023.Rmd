@@ -129,6 +129,19 @@ for(name in coding_committee) {
 }
 ```
 
+
+```{r answer_3}
+# Create Vector
+coding_committee <- c("Kyle", "Simone", "Pankti", "Alys", "Michael")
+
+# Run through vector in for loop
+for(name in coding_committee) {
+  print(name)
+  print(name)
+}
+```
+
+
 Practice debugging the loop below:
 ```{r practice_4}
 years <- list(c(2012, 2018, 2023))
@@ -138,6 +151,16 @@ for(y in seq_along(years)){
 }
 ```
 
+
+```{r answer_4}
+years <- list(c(2012, 2018, 2023))
+
+for(y in seq_along(years[[1]])){
+  print(paste("The analysis year is:", y))
+}
+```
+
+
 ## Saving data out  
 
 Easy method that most people start with is not the best method
@@ -145,6 +168,7 @@ Best practice is to build something empty to capture the output of the for loop,
 
 ```{r loop_saveout1}
 coding_committee <- c("Kyle", "Simone", "Pankti", "Alys", "Michael")
+
 # Create vector to catch output
 out <- c()
 
@@ -154,6 +178,7 @@ for (i in coding_committee){
       print(i)
 }
 
+# Print the result
 out
 
 ```
@@ -180,7 +205,33 @@ Fahrenheit = (Celsius * 9/5) + 32
 
 Write a for loop that iterates over the list of Celsius temperatures, applies the conversion formula to each temperature, and stores the converted Fahrenheit temperatures in a new list.
 
-```{r practice_3}
+```{r practice_5}
+# Create vector of Celsius temperatures
+celsius_temperatures <- c(31, 29, 24, 25, 27, 28, 32)
+
+# Create empty vector to catch output named farenheit_temperatures
+X
+  
+# Write for loop with function inside
+for(i in seq_along(celsius_temperatures)){
+  # Print where the loop is up to
+  print(paste("Started day ", i))
+        
+  # Calc the temp
+  X <- (celsius_temperatures[X] * 9/5) + 32
+  
+  # Save it out
+  X <- c(X, X)
+        
+  # Print the the loop has finished interation i
+
+}
+
+# Examine Fahrenheit temperatures
+farenheit_temperatures
+```
+
+```{r answer_5}
 # Create vector of Celsius temperatures
 celsius_temperatures <- c(31, 29, 24, 25, 27, 28, 32)
 
@@ -189,10 +240,17 @@ farenheit_temperatures <- c()
   
 # Write for loop with function inside
 for(i in seq_along(celsius_temperatures)){
-  
-        farenheit_temperatures <- (celsius_temperatures * 9/5) + 32
+  # Print where the loop is up to
+        print(paste("Started day ", i))
         
-        print(paste("Day ", i))
+  # Calc the temp
+  new_temp <- (celsius_temperatures[i] * 9/5) + 32
+  
+  # Save it out
+  farenheit_temperatures <- c(farenheit_temperatures, new_temp)
+        
+  # Print where the loop is up to
+  print(paste("Finished day ", i))
 }
 
 # Examine Fahrenheit temperatures
@@ -260,7 +318,7 @@ print(average_petal_widths_df)
 
 
 # But can also do this other ways
-library(tidyverse)
+library(dplyr) #better to load the single package rather than the whole tidyverse
 # Create a data frame by splitting the iris data set by species
 average_petal_widths_df2 <- iris %>%
                                 group_by(Species) %>%
@@ -329,9 +387,9 @@ for (i in seq_along(trip.list)) {
       stop_last     <- as.numeric(trip.list[[i]]$stop[nrow(trip.list[[i]])]) + 1
       
       respondent_trip.list[[i]] <- trip.list[[i]][nrow(trip.list[[i]]),] %>%
-                                        mutate(from = last_stop, 
-                                               to = to_home, 
-                                               stop = stop_last,
+                                        mutate(from     = last_stop, 
+                                               to       = to_home, 
+                                               stop     = stop_last,
                                                edgename = paste(from, to, sep = " to "))
       print(i)
 }                           
@@ -385,7 +443,7 @@ out
 Using an if statement combined with break will stop the for loop once a specific condition is met.
 ```{r ext_break}
 # Animal names
-animals <- c('koala', 'cat', 'dog', 'panda')
+animals <- c('koala', 'panda', 'cat', 'dog', 'snake')
 
 # Run for Loop
 for (animal in animals) {
@@ -400,7 +458,7 @@ for (animal in animals) {
 Using an if statement combined with next will skip the indexed part of the sequence where the condition is not met. 
 ```{r ext_next}
 # Animal names
-animals <- c('koala', 'cat', 'dog', 'panda')
+animals <- c('koala', 'panda', 'cat', 'dog', 'snake')
 
 # Run for loop
 for (animal in animals) {
@@ -432,8 +490,8 @@ Loop inside a loop
 The below example is running through the sequence, and multiples of itself up to its own value. E.g., 1x1, 2x1, 2x2, 3x1, 3x2, 3x3 etc.
 ```{r Basic Nested Loop Example}
 for (i in 1:5){
-    for (j in 1:i)
-    {
+    for (j in 1:i){
+      print(paste("For i is: ", i, "and j is: ", j))
         print(i * j)
     }
 }
@@ -454,6 +512,69 @@ for (row in 1:nrow(super_sleepers)) {
     }
 }
 ```
+
+
+```{r practice_6}
+## set up the data
+super_sleepers <- data.frame(rating = 1:4,
+                             category  = c('koala', 'my cat oreo', 'hedgehog', 'people on beaches', 'people after wine', 'sloth', 'panda', 'people after eating noodles'),
+                             taxa = c('animal', 'animal', 'animal', 'people', 'people',  'animal', 'animal', 'people'),
+                             country = c('Australia', 'Australia', 'Italy', 'Italy', 'Italy', 'Peru', 'China', 'China'),
+                             avg_sleep_hours = c(21, 17, 18, 4, 9, 17, 10, 11))
+
+print(super_sleepers)
+
+# For each taxa in each country, find the mean number of hours slept
+
+for (i in )) {
+    for (ii in )) {
+
+    }
+}
+```
+
+
+```{r answer_6}
+## set up the data
+super_sleepers <- data.frame(rating = 1:4,
+                             category  = c('koala', 'my cat oreo', 'hedgehog', 'people on beaches', 'people after wine', 'sloth', 'panda', 'people after eating noodles'),
+                             taxa = c('animal', 'animal', 'animal', 'people', 'people',  'animal', 'animal', 'people'),
+                             country = c('Australia', 'Australia', 'Italy', 'Italy', 'Italy', 'Peru', 'China', 'China'),
+                             avg_sleep_hours = c(21, 17, 18, 4, 9, 17, 10, 11))
+
+print(super_sleepers)
+
+# For each taxa in each country, find the mean number of hours slept
+sleepy_country <- unique(super_sleepers$country)
+sleepy_taxa <- unique(super_sleepers$taxa)
+
+## Set up a dataframe to save out
+sleepy_out <- data.frame(country = sleepy_country,
+                         taxa = sleepy_taxa,
+                         mean_sleep = rep(NA, times = length(sleepy_taxa)))
+
+for (i in seq_along(sleepy_country)) {
+    for (ii in 1:length(sleepy_taxa)) {
+      
+      ## filter the data
+      sleepy_df <- super_sleepers %>%
+        filter(country == sleepy_country[i],
+               taxa == sleepy_taxa[[ii]])
+      
+      ## calculate the mean
+      m <- mean(sleepy_df$avg_sleep_hours)
+      
+      ## Save the result into the dataframe
+      sleepy_out$mean_sleep[sleepy_out$country == sleepy_country[i]& sleepy_out$taxa == sleepy_taxa[[ii]]] <- m
+        
+    }
+}
+
+## Look at the output
+sleepy_out
+
+```
+
 
 You can use for loops on matrices too. 
 ```{r For Loop on matrix}
