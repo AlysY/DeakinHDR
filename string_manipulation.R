@@ -84,7 +84,7 @@ starwars_samp$name[stringr::str_detect(starwars_samp$name,
 starwars_dirty <- head(starwars, n = 3) %>% 
   select(name) %>% pull
 
-starwars_dirty <- c(starwars_dirty, "luke skywalker", "l. skywalker", "L skywalker ", "Luke Skywalking", "C_3P0", "C_3_P0", "C-3po", "C-3PO", "r2 d2", "R2 D3") %>% sort
+starwars_dirty <- c(starwars_dirty, " luke   skywalker ", "l. skywalker", "L skywalker ", "Luke Skywalking", "C_3P0", "C_3_P0", "C-3po", "C-3PO", "r2 d2", "R2 D3") %>% sort
 
 
 
@@ -118,6 +118,13 @@ sub("_",
 stringr::str_replace(starwars_dirty,
                      pattern = "luke",
                      replacement = "Luke")
+
+# Dealing with white spaces
+trimws(starwars_dirty)
+
+str_trim(starwars_dirty) 
+
+str_squish(starwars_dirty)
 
 # Note: In regex, . is a special character meaning "any character"
 # to match a pattern on a full stop you must specific you mean the character a full stop and not the regex version of a .
