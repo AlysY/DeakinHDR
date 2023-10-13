@@ -1,20 +1,19 @@
-
-# String manipulation 
-# Find, change and extract patterns
-
-# Orginally by David Wilkinson UoM
-# Rewritten by Alys Young
-
-# Oct 2023
-
+#####################################
+# String manipulation               #
+# Find, change and extract patterns #
+#                                   #
+# Orginally by David Wilkinson UoM  #
+# Rewritten by Alys Young           #
+#                                   #
+# Oct 2023                          #
+#####################################
 
 ########## -
 # Set up # ---------------------------------------------------------------------
 ########## -
 
-require(stringr)
-require(stringi)
-
+library(stringr)
+library(stringi)
 library(dplyr)
 
 
@@ -24,10 +23,10 @@ library(dplyr)
 
 ## The dataset --------------------------- -
 # Look at the data
-starwars
+dplyr::starwars
 
 # take a sample for today
-starwars_samp <- head(starwars)
+starwars_samp <- head(dplyr::starwars)
 
 # We will be using the name column
 starwars_samp$name
@@ -35,23 +34,23 @@ starwars_samp$name
 
 
 ## Examples --------------------------- -
-
 grep(pattern = "Skywalker",
      x = starwars_samp$name,
      ignore.case = FALSE,
-     value = FALSE,
-     invert = FALSE)
+     value = TRUE,
+     invert = TRUE)
 
-grepl(pattern = "Skywalker",
+g <- grepl(pattern = "Skywalker",
       x = starwars_samp$name,
       ignore.case = FALSE)
+starwars_samp$name[g]
 
 stringi::stri_detect_fixed(starwars_samp$name,
                            pattern = "L")
 
 stringr::str_detect(starwars_samp$name,
                     pattern = "Vader",
-                    negate = TRUE)
+                    negate = FALSE)
 
 stringr::str_detect(starwars_samp$name,
                     pattern = "3PO|D2",
@@ -66,9 +65,20 @@ starwars_samp$name[stringr::str_detect(starwars_samp$name,
 # Task 1
 # Filter the dataset to only include rows where the name has a hyphen in it
 
+starwars_samp[stringr::str_detect(starwars_samp$name,
+                                       pattern = "-")]
+
+filter(starwars_samp, stringr::str_detect(starwars_samp$name,
+                                          pattern = "-"))
+
+g<-stringi::stri_detect_fixed(starwars_samp$name,
+                              pattern = "-")
+filtered_dataset <- starwars_samp[g, ]
+
 # Task 2
 # Using a different method, filter the data to only include rows
-# which include Luke and Leia's names
+# which include Luke or Leia's names
+
 
 # Note:
 # There is a process called fuzzy matching where
@@ -92,15 +102,20 @@ starwars_dirty <- c(starwars_dirty, " luke   skywalker ", "l. skywalker", "L sky
 ## Examples --------------------------- -
 
 tolower(starwars_dirty)
-
 toupper(starwars_dirty)
-
 tools::toTitleCase(starwars_dirty)
 
+# using stringr
 stringr::str_to_upper(starwars_dirty)
 stringr::str_to_lower(starwars_dirty)
 stringr::str_to_title(starwars_dirty) # good for people's names
 stringr::str_to_sentence(starwars_dirty) # good for species's names and plotting
+
+# using snakecase
+library(snakecase)
+to_snake_case(starwars_dirty)
+to_mixed_case(starwars_dirty, sep_out = " ")
+to_upper_camel_case(starwars_dirty)
 
 
 gsub(pattern = "Skywalking",
@@ -115,16 +130,31 @@ sub("_",
     "-",
     starwars_dirty)
 
+# Note: This changes only the first underscore - so watch out if there are multiple
+# if you have multiple underscores, you can clean it twice
+cleaned_once <- sub("_",
+    "-",
+    starwars_dirty)
+
+cleaned_twice <- sub("_",
+                    "-",
+                    cleaned_once)
+
+
 stringr::str_replace(starwars_dirty,
                      pattern = "luke",
                      replacement = "Luke")
 
+stringr::str_replace(starwars_dirty,
+                     pattern = c("L |l "),
+                     replacement = "Luke ")
+
 # Dealing with white spaces
 trimws(starwars_dirty)
 
-str_trim(starwars_dirty) 
+stringr::str_trim(starwars_dirty) 
 
-str_squish(starwars_dirty)
+stringr::str_squish(starwars_dirty)
 
 # Note: In regex, . is a special character meaning "any character"
 # to match a pattern on a full stop you must specific you mean the character a full stop and not the regex version of a .
@@ -158,9 +188,9 @@ unique(starwars_dirty)
 
 ## The dataset --------------------------- -
 cat_df <- data.frame(species_year = c("cat_2020",
-                                               "cat_2021",
-                                               "cat_2022",
-                                               "cat_23"))
+                                      "cat_2021",
+                                      "cat_2022",
+                                      "cat_23"))
                      
 
 
@@ -196,14 +226,19 @@ stringi::stri_count_regex(cat_df$species_year,
 ## Task  --------------------------- -
 
 # Task
-# Change the pattern to "\\d{2,} to extract 2 or more digits in a row
+# Change the pattern to "\\d{2,}" to extract 2 or more digits in a row
 # write these into a new column in the dataframe
 
+stringr::str_extract(cat_df$species_year,
+                     pattern = "\\d{4,}")
 # Task
 # Change the pattern to look for 3 or more digits in a row to find the row with where the year is written as two digits
+stringr::str_extract(cat_df$species_year,
+                     pattern = "\\d{3,}")
 
 # Task
 # use species_df to find the row where the year is recorded only with 2 digit rather than 4
+
 
 ####################
 # String Splitting #
@@ -245,9 +280,11 @@ stringr::str_split_fixed(species_df$species_site_year,
 # Save each of the properties (species, sites and year
 # into their own columns in the original dataframe
 
-
-
-
+my_split_mat <- stringr::str_split(species_df$species_site_year,
+                                  pattern = "_",
+                                  simplify = TRUE)
+my_split_df <- as.data.frame(my_split_mat)
+names(my_split_df) <- c("species", "site", "year")
 
 
 
